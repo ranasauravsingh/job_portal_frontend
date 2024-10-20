@@ -1,4 +1,5 @@
-const API_URL = import.meta.env.VITE_REACT_APP_API_URL;
+// const API_URL = import.meta.env.VITE_REACT_APP_API_URL;
+const API_URL = `https://job-portal-backend-wkxa.onrender.com/api`;
 
 const addPrefix = (route: string) => {
 	return API_URL + "/" + route;
