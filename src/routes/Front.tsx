@@ -45,7 +45,11 @@ const Front: React.FunctionComponent = () => {
 	const privateRoutes: FrontRoutes[] = [
 		{
 			path: appendBaseURL("/jobs"),
-			element: <Jobs />,
+			element: (
+				<PrivateRoute accessibleRoles={["student"]}>
+					<Jobs />
+				</PrivateRoute>
+			),
 		},
 		{
 			path: appendBaseURL("/description/:id"),
