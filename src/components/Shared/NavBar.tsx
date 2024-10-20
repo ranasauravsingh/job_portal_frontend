@@ -13,7 +13,7 @@ import { REQUEST_ROUTE_LOGOUT } from "@/_services/auth";
 import { getBody } from "@/_services/service";
 import { ResponseData } from "@/types/common.types";
 import { setUser } from "@/redux/authSlice";
-import { handleError } from "@/_helpers/common_functions";
+import { appendBaseURL, handleError } from "@/_helpers/common_functions";
 
 const NavBar = () => {
 	const navigate: NavigateFunction = useNavigate();
@@ -27,7 +27,7 @@ const NavBar = () => {
 
 				if (response?.success === true) {
 					dispatch(setUser(null));
-					navigate("/");
+					navigate(appendBaseURL("/"));
 
 					if (response?.message) {
 						toast.success(response?.message);
@@ -52,22 +52,26 @@ const NavBar = () => {
 						{user && user?.role === "recruiter" ? (
 							<>
 								<li>
-									<Link to="/admin/companies">Companies</Link>
+									<Link to={appendBaseURL("/admin/companies")}>Companies</Link>
 								</li>
 								<li>
-									<Link to="/admin/jobs">Jobs</Link>
+									<Link to={appendBaseURL("/admin/jobs")}>Jobs</Link>
 								</li>
 							</>
 						) : (
 							<>
 								<li>
-									<Link to="/">Home</Link>
+									<Link to={appendBaseURL("/")}>Home</Link>
 								</li>
 								<li>
-									<Link to="/jobs">Jobs</Link>
+									<Link to={appendBaseURL("/jobs")}>
+										Jobs
+									</Link>
 								</li>
 								<li>
-									<Link to="/browse">Browse</Link>
+									<Link to={appendBaseURL("/browse")}>
+										Browse
+									</Link>
 								</li>
 							</>
 						)}
@@ -75,10 +79,10 @@ const NavBar = () => {
 
 					{!user ? (
 						<div className="flex items-center gap-2">
-							<Link to="/login">
+							<Link to={appendBaseURL("/login")}>
 								<Button variant={"outline"}>Login</Button>
 							</Link>
-							<Link to="/register">
+							<Link to={appendBaseURL("/register")}>
 								<Button className="bg-[#6A38C2] hover:bg-[#5b30a6] text-[#ffffff]">
 									SignUp
 								</Button>
@@ -126,7 +130,11 @@ const NavBar = () => {
 												<Button
 													variant="link"
 													onClick={() => {
-														navigate("/profile");
+														navigate(
+															appendBaseURL(
+																"/profile"
+															)
+														);
 													}}
 												>
 													{" "}

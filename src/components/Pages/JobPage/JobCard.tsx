@@ -5,6 +5,7 @@ import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { JobCardProps } from "@/types/job.types";
+import { appendBaseURL } from "@/_helpers/common_functions";
 
 const JobCard = (props: JobCardProps) => {
 	const navigate: NavigateFunction = useNavigate();
@@ -71,7 +72,9 @@ const JobCard = (props: JobCardProps) => {
 			</div>
 			<div className="flex items-center gap-4 mt-4">
 				<Button
-					onClick={() => navigate(`/description/${job?._id}`)}
+					onClick={() =>
+						navigate(appendBaseURL(`/description/${job?._id}`))
+					}
 					variant="outline"
 				>
 					Details

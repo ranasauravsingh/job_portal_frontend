@@ -6,6 +6,7 @@ import { Search } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { setSearchedQuery } from "@/redux/jobSlice";
+import { appendBaseURL } from "@/_helpers/common_functions";
 
 const HeroSection = () => {
 	const [query, setQuery] = useState<string>("");
@@ -14,7 +15,7 @@ const HeroSection = () => {
 
 	const searchJobHandler = () => {
 		dispatch(setSearchedQuery(query));
-		navigate("/browse");
+		navigate(appendBaseURL("/browse"));
 	};
 
 	return (

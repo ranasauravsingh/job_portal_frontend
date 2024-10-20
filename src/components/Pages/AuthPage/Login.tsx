@@ -14,7 +14,7 @@ import { RadioGroup } from "@/components/ui/radio-group";
 
 import { getBody } from "@/_services/service";
 import { REQUEST_ROUTE_LOGIN } from "@/_services/auth";
-import { handleError } from "@/_helpers/common_functions";
+import { appendBaseURL, handleError } from "@/_helpers/common_functions";
 // import { ResponseData } from "@/types/common.types";
 import { LoginPayload, UserRoles } from "@/types/auth.types";
 import { setLoading, setUser } from "@/redux/authSlice";
@@ -56,9 +56,9 @@ const Login: React.FunctionComponent = () => {
 
 					const { user } = response.data;
 					if (user?.role === "recruiter") {
-						navigate("/admin/companies");
+						navigate(appendBaseURL("/admin/companies"));
 					} else {
-						navigate("/home");
+						navigate(appendBaseURL("/home"));
 					}
 
 					if (response?.message) {
@@ -76,7 +76,7 @@ const Login: React.FunctionComponent = () => {
 
 	useEffect(() => {
 		if (user) {
-			navigate("/");
+			navigate(appendBaseURL("/"));
 		}
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -154,7 +154,7 @@ const Login: React.FunctionComponent = () => {
 					<span className="text-sm">
 						Don't have an account?{" "}
 						<Link
-							to="/register"
+							to={appendBaseURL("/register")}
 							className="text-blue-600 hover:underline"
 						>
 							Sign Up

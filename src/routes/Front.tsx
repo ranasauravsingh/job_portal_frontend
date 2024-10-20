@@ -20,34 +20,35 @@ import CompanySetup from "@/components/Pages/AdminPage/CompanyPage/CompanySetup"
 import AdminJob from "@/components/Pages/AdminPage/JobPage/AdminJob";
 import JobCreate from "@/components/Pages/AdminPage/JobPage/JobCreate";
 import Applicants from "@/components/Pages/AdminPage/JobPage/Applicants";
+import { appendBaseURL } from "@/_helpers/common_functions";
 
 const Front: React.FunctionComponent = () => {
 	const publicRoutes: FrontRoutes[] = [
 		{
-			path: "/",
+			path: appendBaseURL("/"),
 			element: <Home />,
 		},
 		{
-			path: "/home",
+			path: appendBaseURL("/home"),
 			element: <Home />,
 		},
 		{
-			path: "/login",
+			path: appendBaseURL("/login"),
 			element: <Login />,
 		},
 		{
-			path: "/register",
+			path: appendBaseURL("/register"),
 			element: <Register />,
 		},
 	];
 
 	const privateRoutes: FrontRoutes[] = [
 		{
-			path: "/jobs",
+			path: appendBaseURL("/jobs"),
 			element: <Jobs />,
 		},
 		{
-			path: "/description/:id",
+			path: appendBaseURL("/description/:id"),
 			element: (
 				<PrivateRoute accessibleRoles={["student"]}>
 					<JobDescription />
@@ -55,7 +56,7 @@ const Front: React.FunctionComponent = () => {
 			),
 		},
 		{
-			path: "/browse",
+			path: appendBaseURL("/browse"),
 			element: (
 				<PrivateRoute accessibleRoles={["student"]}>
 					<Browse />
@@ -63,7 +64,7 @@ const Front: React.FunctionComponent = () => {
 			),
 		},
 		{
-			path: "/profile",
+			path: appendBaseURL("/profile"),
 			element: (
 				<PrivateRoute accessibleRoles={["student"]}>
 					<Profile />
@@ -72,7 +73,7 @@ const Front: React.FunctionComponent = () => {
 		},
 		// admin ke liye yha se start hoga
 		{
-			path: "/admin/companies",
+			path: appendBaseURL("/admin/companies"),
 			element: (
 				<PrivateRoute accessibleRoles={["recruiter"]}>
 					<Companies />
@@ -80,7 +81,7 @@ const Front: React.FunctionComponent = () => {
 			),
 		},
 		{
-			path: "/admin/companies/create",
+			path: appendBaseURL("/admin/companies/create"),
 			element: (
 				<PrivateRoute accessibleRoles={["recruiter"]}>
 					<CompanyCreate />
@@ -88,7 +89,7 @@ const Front: React.FunctionComponent = () => {
 			),
 		},
 		{
-			path: "/admin/companies/:id",
+			path: appendBaseURL("/admin/companies/:id"),
 			element: (
 				<PrivateRoute accessibleRoles={["recruiter"]}>
 					<CompanySetup />
@@ -96,7 +97,7 @@ const Front: React.FunctionComponent = () => {
 			),
 		},
 		{
-			path: "/admin/jobs",
+			path: appendBaseURL("/admin/jobs"),
 			element: (
 				<PrivateRoute accessibleRoles={["recruiter"]}>
 					<AdminJob />
@@ -104,7 +105,7 @@ const Front: React.FunctionComponent = () => {
 			),
 		},
 		{
-			path: "/admin/jobs/create",
+			path: appendBaseURL("/admin/jobs/create"),
 			element: (
 				<PrivateRoute accessibleRoles={["recruiter"]}>
 					<JobCreate />
@@ -112,7 +113,7 @@ const Front: React.FunctionComponent = () => {
 			),
 		},
 		{
-			path: "/admin/jobs/applicants/:id",
+			path: appendBaseURL("/admin/jobs/applicants/:id"),
 			element: (
 				<PrivateRoute accessibleRoles={["recruiter"]}>
 					<Applicants />

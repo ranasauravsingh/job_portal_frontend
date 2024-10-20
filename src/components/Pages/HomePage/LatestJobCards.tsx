@@ -2,6 +2,7 @@ import { NavigateFunction, useNavigate } from "react-router-dom";
 
 import { Badge } from "@/components/ui/badge";
 import { LatestJobCardProps } from "@/types/job.types";
+import { appendBaseURL } from "@/_helpers/common_functions";
 
 const LatestJobCards = (props: LatestJobCardProps) => {
 	const { job } = props;
@@ -10,7 +11,9 @@ const LatestJobCards = (props: LatestJobCardProps) => {
 
 	return (
 		<div
-			onClick={() => navigate(`/description/${job?._id || 0}`)}
+			onClick={() =>
+				navigate(appendBaseURL(`/description/${job?._id || 0}`))
+			}
 			className="p-5 rounded-md shadow-xl bg-white border border-gray-100 cursor-pointer"
 		>
 			<div>

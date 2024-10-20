@@ -11,6 +11,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Dispatch } from "@reduxjs/toolkit";
 import { setSearchedQuery } from "@/redux/jobSlice";
+import { appendBaseURL } from "@/_helpers/common_functions";
 
 const category: string[] = [
 	"Frontend Developer",
@@ -26,7 +27,7 @@ const CategoryCarousel = () => {
 
 	const searchJobHandler = (query: string) => {
 		dispatch(setSearchedQuery(query));
-		navigate("/browse");
+		navigate(appendBaseURL("/browse"));
 	};
 
 	return (

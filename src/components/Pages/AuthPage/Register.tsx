@@ -14,7 +14,7 @@ import { RadioGroup } from "@/components/ui/radio-group";
 
 import { RegisterPayload, UserRoles } from "@/types/auth.types";
 import { REQUEST_ROUTE_REGISTER } from "@/_services/auth";
-import { handleError } from "@/_helpers/common_functions";
+import { appendBaseURL, handleError } from "@/_helpers/common_functions";
 import { ResponseData } from "@/types/common.types";
 import { getBody } from "@/_services/service";
 import { setLoading } from "@/redux/authSlice";
@@ -76,7 +76,7 @@ const Register: React.FunctionComponent = () => {
 				const response: ResponseData = getBody(res);
 
 				if (response?.success === true) {
-					navigate("/login");
+					navigate(appendBaseURL("/login"));
 					if (response?.message) {
 						toast?.success(response?.message);
 					}
@@ -92,7 +92,7 @@ const Register: React.FunctionComponent = () => {
 
 	useEffect(() => {
 		if (user) {
-			navigate("/");
+			navigate(appendBaseURL("/"));
 		}
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -199,7 +199,7 @@ const Register: React.FunctionComponent = () => {
 					<span className="text-sm">
 						Already have an account?{" "}
 						<Link
-							to="/login"
+							to={appendBaseURL("/login")}
 							className="text-blue-600 hover:underline"
 						>
 							Login

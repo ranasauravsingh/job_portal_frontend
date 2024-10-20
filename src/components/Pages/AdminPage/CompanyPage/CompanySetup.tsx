@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { getBody } from "@/_services/service";
-import { handleError } from "@/_helpers/common_functions";
+import { appendBaseURL, handleError } from "@/_helpers/common_functions";
 import {
 	REQUEST_FETCH_COMPANY_BY_ID,
 	REQUEST_UPDATE_COMPANY_BY_ID,
@@ -74,7 +74,7 @@ const CompanySetup = () => {
 				const response: ResponseData = getBody(res);
 
 				if (response?.success === true) {
-					navigate("/admin/companies");
+					navigate(appendBaseURL("/admin/companies"));
 					if (response?.message) {
 						toast?.success(response?.message);
 					}
@@ -136,7 +136,9 @@ const CompanySetup = () => {
 				<form onSubmit={submitHandler}>
 					<div className="flex items-center gap-5 p-8">
 						<Button
-							onClick={() => navigate("/admin/companies")}
+							onClick={() =>
+								navigate(appendBaseURL("/admin/companies"))
+							}
 							variant="outline"
 							className="flex items-center gap-2 text-gray-500 font-semibold"
 						>

@@ -24,7 +24,7 @@ import {
 	PopoverTrigger,
 } from "@/components/ui/popover";
 import { RootState } from "@/redux/store";
-import { handleError } from "@/_helpers/common_functions";
+import { appendBaseURL, handleError } from "@/_helpers/common_functions";
 import { ResponseData } from "@/types/common.types";
 import { getBody } from "@/_services/service";
 import { JobType } from "@/types/job.types";
@@ -99,7 +99,11 @@ const AdminJob = () => {
 						placeholder="Filter by name, role"
 						onChange={(e) => setInput(e.target.value)}
 					/>
-					<Button onClick={() => navigate("/admin/jobs/create")}>
+					<Button
+						onClick={() =>
+							navigate(appendBaseURL("/admin/jobs/create"))
+						}
+					>
 						New Job
 					</Button>
 				</div>
@@ -139,7 +143,9 @@ const AdminJob = () => {
 												<div
 													onClick={() =>
 														navigate(
-															`/admin/companies/${job?._id}`
+															appendBaseURL(
+																`/admin/companies/${job?._id}`
+															)
 														)
 													}
 													className="flex items-center gap-2 w-fit cursor-pointer"
@@ -150,7 +156,9 @@ const AdminJob = () => {
 												<div
 													onClick={() =>
 														navigate(
-															`/admin/jobs/applicants/${job?._id}`
+															appendBaseURL(
+																`/admin/jobs/applicants/${job?._id}`
+															)
 														)
 													}
 													className="flex items-center w-fit gap-2 cursor-pointer mt-2"

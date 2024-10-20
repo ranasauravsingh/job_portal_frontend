@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import { PrivateRouteProps } from "@/types/common.types";
+import { appendBaseURL } from "@/_helpers/common_functions";
 
 const PrivateRoute = (props: PrivateRouteProps) => {
 	const { children, accessibleRoles } = props;
@@ -14,7 +15,7 @@ const PrivateRoute = (props: PrivateRouteProps) => {
 
 	useEffect(() => {
 		if (user === null || !accessibleRoles?.includes(user?.role)) {
-			navigate("/");
+			navigate(appendBaseURL("/"));
 		}
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps

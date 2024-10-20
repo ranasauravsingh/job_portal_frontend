@@ -20,7 +20,7 @@ import { JobPayload } from "@/types/job.types";
 import { CompanyType } from "@/types/company.types";
 import { REQUEST_ADMIN_POST_JOB } from "@/_services/job";
 import { AxiosError, AxiosResponse } from "axios";
-import { handleError } from "@/_helpers/common_functions";
+import { appendBaseURL, handleError } from "@/_helpers/common_functions";
 import { getBody } from "@/_services/service";
 import { toast } from "sonner";
 import { ResponseData } from "@/types/common.types";
@@ -92,7 +92,7 @@ const JobCreate = () => {
 				const response: ResponseData = getBody(res);
 
 				if (response?.success === true) {
-					navigate("/admin/jobs");
+					navigate(appendBaseURL("/admin/jobs"));
 					if (response?.message) {
 						toast?.success(response?.message);
 					}
