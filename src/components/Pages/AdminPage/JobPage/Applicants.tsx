@@ -58,7 +58,7 @@ const Applicants = () => {
 	const fetchAllApplicants = async (jobId: string) => {
 		REQUEST_FETCH_APPLICANTS(jobId)
 			.then((res: AxiosResponse) => {
-				const response: ResponseData = getBody(res);
+				const response = getBody(res);
 				const { applications } = response?.data || [];
 				setApplicants(applications);
 

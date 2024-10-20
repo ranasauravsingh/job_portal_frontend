@@ -15,7 +15,7 @@ import { RadioGroup } from "@/components/ui/radio-group";
 import { getBody } from "@/_services/service";
 import { REQUEST_ROUTE_LOGIN } from "@/_services/auth";
 import { handleError } from "@/_helpers/common_functions";
-import { ResponseData } from "@/types/common.types";
+// import { ResponseData } from "@/types/common.types";
 import { LoginPayload, UserRoles } from "@/types/auth.types";
 import { setLoading, setUser } from "@/redux/authSlice";
 import { RootState } from "@/redux/store";
@@ -49,7 +49,7 @@ const Login: React.FunctionComponent = () => {
 
 		REQUEST_ROUTE_LOGIN(loginPayload)
 			.then((res: AxiosResponse) => {
-				const response: ResponseData = getBody(res);
+				const response = getBody(res);
 
 				if (response?.success === true) {
 					dispatch(setUser(response?.data?.user));

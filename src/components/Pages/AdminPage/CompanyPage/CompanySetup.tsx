@@ -91,7 +91,7 @@ const CompanySetup = () => {
 	const fetchCompanyById = (companyId: string) => {
 		REQUEST_FETCH_COMPANY_BY_ID(companyId)
 			.then((res: AxiosResponse) => {
-				const response: ResponseData = getBody(res);
+				const response = getBody(res);
 
 				if (response?.success === true) {
 					const { name, description, website, location, file } =

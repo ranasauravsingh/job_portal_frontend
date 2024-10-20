@@ -64,7 +64,7 @@ const JobDescription = () => {
 	const fetchJobById = (jobId: string) => {
 		REQUEST_FETCH_JOB_BY_ID(jobId)
 			.then((res: AxiosResponse) => {
-				const response: ResponseData = getBody(res);
+				const response = getBody(res);
 
 				if (response?.success === true) {
 					dispatch(setSingleJob(response?.data));
