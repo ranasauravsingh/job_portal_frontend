@@ -2,6 +2,7 @@ import axios, { AxiosInstance, AxiosResponse } from "axios";
 
 // Axios instance with default configuration
 const axiosInstance: AxiosInstance = axios.create({
+	baseURL: `https://job-portal-backend-wkxa.onrender.com`,
 	withCredentials: true, // This ensures that cookies are sent with requests
 });
 
