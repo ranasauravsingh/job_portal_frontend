@@ -163,7 +163,7 @@ export const storeUserFCMToken = (fcmToken: string) => {
 	);
 
 	REQUEST_UPDATE_USER_FCM_TOKEN(userFCMPayload)
-		.then((res) => {
+		.then(() => {
 			// const response = getBody(res);
 			// console.log("response--->", response);
 		})
