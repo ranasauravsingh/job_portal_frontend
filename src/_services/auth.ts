@@ -5,6 +5,7 @@ import {
 	ROUTE_LOGOUT,
 	ROUTE_REGISTER,
 	ROUTE_UPDATE_USER,
+	ROUTE_UPDATE_USER_FCM_TOKEN,
 } from "./api";
 
 export const REQUEST_ROUTE_LOGIN = (data: LoginPayload) => {
@@ -20,6 +21,13 @@ export const REQUEST_ROUTE_UPDATE_USER = (
 	requestHeaders = {}
 ) => {
 	return POST(ROUTE_UPDATE_USER, data, requestHeaders);
+};
+
+export const REQUEST_UPDATE_USER_FCM_TOKEN = (
+	data: FormData,
+	requestHeaders = {}
+) => {
+	return POST(ROUTE_UPDATE_USER_FCM_TOKEN, data, requestHeaders);
 };
 
 export const REQUEST_ROUTE_LOGOUT = () => {

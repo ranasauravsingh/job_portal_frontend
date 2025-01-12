@@ -7,6 +7,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import App from "./App.tsx";
 import "./index.css";
 import store from "./redux/store.ts";
+import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 
 const persistor = persistStore(store);
 
@@ -19,3 +20,11 @@ createRoot(document.getElementById("root")!).render(
 	</Provider>
 	// </StrictMode>
 );
+
+if (!import.meta.env.MODE) {
+	// dev code
+	serviceWorkerRegistration.unregister();
+} else {
+	// production code
+	serviceWorkerRegistration.register();
+}

@@ -10,6 +10,7 @@ export const ROUTE_LOGIN = addPrefix("user/login");
 export const ROUTE_REGISTER = addPrefix("user/register");
 export const ROUTE_UPDATE_USER = addPrefix("user/update-profile");
 export const ROUTE_LOGOUT = addPrefix("user/logout");
+export const ROUTE_UPDATE_USER_FCM_TOKEN = addPrefix("user/update-fcm-token");
 
 // Job
 export const ROUTE_FETCH_ALL_JOBS = addPrefix("job/get");

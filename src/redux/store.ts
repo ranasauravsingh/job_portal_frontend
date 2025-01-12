@@ -14,6 +14,7 @@ import storage from "redux-persist/lib/storage";
 import authSlice from "./authSlice";
 import jobSlice from "./jobSlice";
 import companySlice from "./companySlice";
+import notificationSlice from "./notificationSlice";
 // import applicationSlice from "./applicationSlice";
 
 const persistConfig = {
@@ -26,6 +27,7 @@ const rootReducer = combineReducers({
 	auth: authSlice,
 	job: jobSlice,
 	company: companySlice,
+	notifications: notificationSlice,
 	// application:applicationSlice
 });
 
