@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { getBody } from "@/_services/service";
-import { handleError } from "@/_helpers/common_functions";
+import { appendBaseURL, handleError } from "@/_helpers/common_functions";
 import { REQUEST_REGISTER_COMPANY } from "@/_services/company";
 import { setSingleCompany } from "@/redux/companySlice";
 
@@ -30,7 +30,7 @@ const CompanyCreate = () => {
 				if (response?.success === true) {
 					dispatch(setSingleCompany(response?.data));
 					const companyId = response?.data?._id;
-					navigate(`/admin/companies/${companyId}`);
+					navigate(appendBaseURL(`/admin/companies/${companyId}`));
 
 					if (response?.message) {
 						toast.success(response?.message);
@@ -64,7 +64,9 @@ const CompanyCreate = () => {
 				<div className="flex items-center gap-2 my-10">
 					<Button
 						variant="outline"
-						onClick={() => navigate("/admin/companies")}
+						onClick={() =>
+							navigate(appendBaseURL("/admin/companies"))
+						}
 					>
 						Cancel
 					</Button>

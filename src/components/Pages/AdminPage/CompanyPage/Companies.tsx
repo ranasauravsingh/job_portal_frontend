@@ -28,7 +28,7 @@ import { RootState } from "@/redux/store";
 import { REQUEST_FETCH_ALL_COMPANIES } from "@/_services/company";
 import { getBody } from "@/_services/service";
 import { ResponseData } from "@/types/common.types";
-import { handleError } from "@/_helpers/common_functions";
+import { appendBaseURL, handleError } from "@/_helpers/common_functions";
 import { setCompanies } from "@/redux/companySlice";
 import { CompanyType } from "@/types/company.types";
 
@@ -98,7 +98,11 @@ const Companies = () => {
 						placeholder="Filter by name"
 						onChange={(e) => setInput(e.target.value)}
 					/>
-					<Button onClick={() => navigate("/admin/companies/create")}>
+					<Button
+						onClick={() =>
+							navigate(appendBaseURL("/admin/companies/create"))
+						}
+					>
 						New Company
 					</Button>
 				</div>
@@ -145,7 +149,9 @@ const Companies = () => {
 													<div
 														onClick={() =>
 															navigate(
-																`/admin/companies/${company?._id}`
+																appendBaseURL(
+																	`/admin/companies/${company?._id}`
+																)
 															)
 														}
 														className="flex items-center gap-2 w-fit cursor-pointer"
