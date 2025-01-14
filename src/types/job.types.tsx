@@ -30,6 +30,10 @@ export type JobRouteParams = {
 	id?: string;
 };
 
+export type JobCreateProps = {
+	isEdit?: boolean;
+}
+
 export type JobPayload = {
 	title: string;
 	description: string;

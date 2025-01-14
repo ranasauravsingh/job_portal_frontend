@@ -144,7 +144,7 @@ const AdminJob = () => {
 													onClick={() =>
 														navigate(
 															appendBaseURL(
-																`/admin/companies/${job?._id}`
+																`/admin/jobs/${job?._id}`
 															)
 														)
 													}

@@ -17,6 +17,7 @@ export const ROUTE_FETCH_ALL_JOBS = addPrefix("job/get");
 export const ROUTE_FETCH_JOB_BY_ID = addPrefix("job/get");
 export const ROUTE_FETCH_ADMIN_JOBS = addPrefix("job/get-admin-jobs");
 export const ROUTE_ADMIN_POST_JOB = addPrefix("job/post");
+export const ROUTE_UPDATE_ADMIN_JOB = addPrefix("job/update");
 
 // Applicant
 export const ROUTE_APPLY_JOB_BY_ID = addPrefix("application/apply");

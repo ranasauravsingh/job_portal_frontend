@@ -117,6 +117,14 @@ const Front: React.FunctionComponent = () => {
 			),
 		},
 		{
+			path: appendBaseURL("/admin/jobs/:id"),
+			element: (
+				<PrivateRoute accessibleRoles={["recruiter"]}>
+					<JobCreate isEdit={true} />
+				</PrivateRoute>
+			),
+		},
+		{
 			path: appendBaseURL("/admin/jobs/applicants/:id"),
 			element: (
 				<PrivateRoute accessibleRoles={["recruiter"]}>

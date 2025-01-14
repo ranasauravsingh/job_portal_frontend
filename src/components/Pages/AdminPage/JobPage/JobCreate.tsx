@@ -1,7 +1,9 @@
-import { useState } from "react";
-import { Loader2 } from "lucide-react";
+import { useEffect, useState } from "react";
+import { ArrowLeft, Loader2 } from "lucide-react";
 import { useSelector } from "react-redux";
-import { NavigateFunction, useNavigate } from "react-router-dom";
+import { NavigateFunction, useNavigate, useParams } from "react-router-dom";
+import { AxiosError, AxiosResponse } from "axios";
+import { toast } from "sonner";
 
 import NavBar from "@/components/Shared/NavBar";
 import { Button } from "@/components/ui/button";
@@ -16,17 +18,23 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { RootState } from "@/redux/store";
-import { JobPayload } from "@/types/job.types";
+import { JobCreateProps, JobPayload, JobRouteParams } from "@/types/job.types";
 import { CompanyType } from "@/types/company.types";
-import { REQUEST_ADMIN_POST_JOB } from "@/_services/job";
-import { AxiosError, AxiosResponse } from "axios";
+import {
+	REQUEST_ADMIN_POST_JOB,
+	REQUEST_FETCH_JOB_BY_ID,
+	REQUEST_UPDATE_JOB_BY_ID,
+} from "@/_services/job";
 import { appendBaseURL, handleError } from "@/_helpers/common_functions";
 import { getBody } from "@/_services/service";
-import { toast } from "sonner";
 import { ResponseData } from "@/types/common.types";
 
-const JobCreate = () => {
+const JobCreate = (props: JobCreateProps) => {
 	const navigate: NavigateFunction = useNavigate();
+	const params: JobRouteParams = useParams();
+
+	const { isEdit } = props;
+	const { id: jobId = "" } = params;
 
 	const { companies } = useSelector((state: RootState) => state?.company);
 
@@ -42,6 +50,7 @@ const JobCreate = () => {
 		companyId: "",
 	});
 	const [loading, setLoading] = useState(false);
+	const [initialRender, setInitialRender] = useState(true);
 
 	const changeEventHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = event.target;
@@ -87,14 +96,81 @@ const JobCreate = () => {
 		jobPayload?.append("positions", positions.toString());
 		jobPayload?.append("companyId", companyId);
 
-		REQUEST_ADMIN_POST_JOB(jobPayload)
+		if (isEdit) {
+			REQUEST_UPDATE_JOB_BY_ID(jobPayload, jobId)
+				.then((res) => {
+					const response: ResponseData = getBody(res);
+
+					if (response?.success === true) {
+						navigate(appendBaseURL("/admin/jobs"));
+						if (response?.message) {
+							toast?.success(response?.message);
+						}
+					}
+				})
+				.catch((error: AxiosError) => {
+					handleError(error);
+				})
+				.finally(() => {
+					setLoading(false);
+				});
+		} else {
+			REQUEST_ADMIN_POST_JOB(jobPayload)
+				.then((res: AxiosResponse) => {
+					const response: ResponseData = getBody(res);
+
+					if (response?.success === true) {
+						navigate(appendBaseURL("/admin/jobs"));
+						if (response?.message) {
+							toast?.success(response?.message);
+						}
+					}
+				})
+				.catch((error: AxiosError) => {
+					handleError(error);
+				})
+				.finally(() => {
+					setLoading(false);
+				});
+		}
+	};
+
+	const fetchJobById = (job_id: string) => {
+		REQUEST_FETCH_JOB_BY_ID(job_id)
 			.then((res: AxiosResponse) => {
-				const response: ResponseData = getBody(res);
+				const response = getBody(res);
 
 				if (response?.success === true) {
-					navigate(appendBaseURL("/admin/jobs"));
+					const {
+						company,
+						description,
+						experienceLevel,
+						jobType,
+						location,
+						positions,
+						requirements,
+						salary,
+						title,
+					} = response?.data || {};
+
+					setInput((prevInput) => ({
+						...prevInput,
+						companyId: company || "",
+						description: description || "",
+						experience: experienceLevel || 0,
+						jobType: jobType || "",
+						positions: positions || 0,
+						requirements:
+							requirements?.length > 0
+								? requirements?.join(",")
+								: "",
+						location: location || "",
+						salary: salary || 0,
+						title: title || "",
+					}));
+
 					if (response?.message) {
-						toast?.success(response?.message);
+						toast.success(response?.message);
 					}
 				}
 			})
@@ -102,9 +178,21 @@ const JobCreate = () => {
 				handleError(error);
 			})
 			.finally(() => {
-				setLoading(false);
+				setInitialRender(false);
 			});
 	};
+
+	useEffect(() => {
+		if (!initialRender) {
+			if (isEdit) {
+				fetchJobById(jobId);
+			}
+		} else {
+			setInitialRender(false);
+		}
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [initialRender]);
 
 	return (
 		<div>
@@ -114,6 +202,19 @@ const JobCreate = () => {
 					onSubmit={submitHandler}
 					className="p-8 max-w-4xl border border-gray-200 shadow-lg rounded-md"
 				>
+					<div className="flex items-center gap-5 p-8">
+						<Button
+							onClick={() =>
+								navigate(appendBaseURL("/admin/jobs"))
+							}
+							variant="outline"
+							className="flex items-center gap-2 text-gray-500 font-semibold"
+						>
+							<ArrowLeft />
+							<span>Back</span>
+						</Button>
+						<h1 className="font-bold text-xl">Job</h1>
+					</div>
 					<div className="grid grid-cols-2 gap-2">
 						<div>
 							<Label>Title</Label>
@@ -196,17 +297,29 @@ const JobCreate = () => {
 							/>
 						</div>
 						{companies.length > 0 && (
-							<Select onValueChange={selectChangeHandler}>
+							<Select
+								onValueChange={selectChangeHandler}
+								value={
+									companies
+										.find(
+											(company: CompanyType) =>
+												company?._id ===
+												input?.companyId
+										)
+										?.name?.toLowerCase() || ""
+								}
+							>
 								<SelectTrigger className="w-[180px]">
 									<SelectValue placeholder="Select a Company" />
 								</SelectTrigger>
 								<SelectContent>
 									<SelectGroup>
-										{companies.map(
+										{companies?.map(
 											(company: CompanyType) => {
 												return (
 													<SelectItem
 														value={company?.name?.toLowerCase()}
+														key={company?._id}
 													>
 														{company?.name}
 													</SelectItem>
@@ -226,10 +339,10 @@ const JobCreate = () => {
 						</Button>
 					) : (
 						<Button type="submit" className="w-full my-4">
-							Post New Job
+							{isEdit ? `Update Job` : `Post New Job`}
 						</Button>
 					)}
-					{companies.length === 0 && (
+					{companies?.length === 0 && (
 						<p className="text-xs text-red-600 font-bold text-center my-3">
 							*Please register a company first, before posting a
 							jobs
