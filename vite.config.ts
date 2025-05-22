@@ -10,5 +10,5 @@ export default defineConfig({
 			"@": path.resolve(__dirname, "./src"),
 		},
 	},
-	base: "/job_portal_frontend/",
+	base: "/",
 });
