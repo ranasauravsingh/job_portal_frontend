@@ -11,6 +11,10 @@ export const handleError = (error: AxiosError) => {
 
 	if (errorResponse?.message) {
 		toast.error(errorResponse?.message);
+		if(errorResponse?.message === "User not authenticated.") {
+			localStorage.clear();
+			window.location.href = "/login";
+		}
 		return;
 	} else {
 		return console.log(`Something went wrong: ${error}`);
@@ -18,7 +22,7 @@ export const handleError = (error: AxiosError) => {
 };
 
 export const appendBaseURL = (url: string) => {
-	const REACT_BASE_URL = "/job_portal_frontend";
+	const REACT_BASE_URL = "/";
 
 	return `${REACT_BASE_URL}${url}`;
 };
