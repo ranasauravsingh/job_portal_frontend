@@ -22,7 +22,7 @@ export const handleError = (error: AxiosError) => {
 };
 
 export const appendBaseURL = (url: string) => {
-	const REACT_BASE_URL = "/";
+	const REACT_BASE_URL = "";
 
 	return `${REACT_BASE_URL}${url}`;
 };
